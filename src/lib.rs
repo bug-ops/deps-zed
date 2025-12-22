@@ -32,7 +32,10 @@ impl DepsExtension {
         // Placeholder implementation
         // Binary download logic will be implemented in Phase 1 Week 4
         // For now, return error asking user to install manually
-        Err("deps-lsp binary not found. Please install manually with: cargo install deps-lsp".into())
+        Err(
+            "deps-lsp binary not found. Please install manually with: cargo install deps-lsp"
+                .into(),
+        )
     }
 }
 
