@@ -1,15 +1,15 @@
 [package]
 name = "deps-zed"
-version.workspace = true
-edition.workspace = true
-rust-version.workspace = true
-authors.workspace = true
-license.workspace = true
-repository.workspace = true
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.89"
+authors = ["Andrei G"]
+license = "MIT"
+repository = "https://github.com/bug-ops/deps-zed"
 description = "Zed editor extension for deps-lsp"
 
 [lib]
 crate-type = ["cdylib"]
 
 [dependencies]
-zed_extension_api = { workspace = true }
+zed_extension_api = "0.7"
