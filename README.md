@@ -9,7 +9,8 @@ Zed extension for intelligent dependency management in `Cargo.toml`, `package.js
 ## Features
 
 - **Version Hints** — Inline status indicators (✅ up-to-date, ❌ outdated)
-- **Hover Information** — Version list with docs.rs links, features
+- **Lock File Support** — Resolved versions from Cargo.lock, package-lock.json, poetry.lock, uv.lock
+- **Hover Information** — Version list with resolved version from lock file
 - **Diagnostics** — Warnings for outdated, yanked, or unknown packages
 - **Code Actions** — Quick version updates via `Cmd+.`
 - **Autocomplete** — Package names, versions, and feature flags
@@ -49,11 +50,11 @@ Configure in Zed settings (`Cmd+,`):
 
 ## Supported Files
 
-| Ecosystem | File | Status |
-|-----------|------|--------|
-| Rust | `Cargo.toml` | Supported |
-| npm | `package.json` | Supported |
-| Python | `pyproject.toml` | Planned |
+| Ecosystem | Manifest | Lock File |
+|-----------|----------|-----------|
+| Rust | `Cargo.toml` | `Cargo.lock` |
+| npm | `package.json` | `package-lock.json` |
+| Python | `pyproject.toml` | `poetry.lock`, `uv.lock` |
 
 ## Development
 
