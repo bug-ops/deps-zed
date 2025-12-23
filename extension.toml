@@ -1,6 +1,6 @@
 id = "deps"
 name = "Deps"
-description = "LSP for dependency management in Cargo.toml, package.json, and more"
+description = "Dependency management LSP with lock file support for Cargo.toml, package.json, pyproject.toml"
 version = "0.1.0"
 schema_version = 1
 authors = ["Andrei G"]
