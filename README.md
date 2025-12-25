@@ -1,8 +1,8 @@
 # Deps
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../../LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Zed extension for intelligent dependency management in `Cargo.toml`, `package.json`, and more.
+Zed extension for [deps-lsp](https://github.com/bug-ops/deps-lsp) — intelligent dependency management in `Cargo.toml`, `package.json`, and more.
 
 ![Deps extension in action](assets/img.png)
 
@@ -68,4 +68,4 @@ cargo build -p deps-zed --target wasm32-wasip1
 
 ## License
 
-[MIT](../../LICENSE)
+[MIT](LICENSE)
