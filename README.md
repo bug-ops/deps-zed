@@ -55,6 +55,7 @@ Configure in Zed settings (`Cmd+,`):
 | Rust | `Cargo.toml` | `Cargo.lock` |
 | npm | `package.json` | `package-lock.json` |
 | Python | `pyproject.toml` | `poetry.lock`, `uv.lock` |
+| Go | `go.mod` | `go.sum` |
 
 ## Development
 
