@@ -1,9 +1,9 @@
-id = "deps"
+id = "deps-language-server"
 name = "Deps"
-description = "Dependency management LSP with lock file support for Cargo.toml, package.json, pyproject.toml"
+description = "Dependency management LSP with lock file support"
 version = "0.1.0"
 schema_version = 1
-authors = ["Andrei G"]
+authors = ["Andrei G <k05h31@gmail.com>"]
 repository = "https://github.com/bug-ops/deps-lsp"
 
 [language_servers.deps-lsp]
