@@ -1,11 +1,11 @@
 id = "deps-language-server"
 name = "Deps"
-description = "Dependency management LSP with lock file support"
-version = "0.1.0"
+description = "Intelligent dependency insights across package ecosystems"
+version = "0.1.1"
 schema_version = 1
 authors = ["Andrei G <k05h31@gmail.com>"]
 repository = "https://github.com/bug-ops/deps-lsp"
 
 [language_servers.deps-lsp]
 name = "Deps LSP"
-languages = ["TOML", "JSON"]
+languages = ["TOML", "JSON", "Go Mod"]
