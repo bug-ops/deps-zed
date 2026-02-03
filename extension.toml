@@ -1,9 +1,9 @@
-id = "deps"
+id = "deps-language-server"
 name = "Deps"
 description = "Intelligent dependency insights across package ecosystems"
 version = "0.1.1"
 schema_version = 1
-authors = ["Andrei G"]
+authors = ["Andrei G <k05h31@gmail.com>"]
 repository = "https://github.com/bug-ops/deps-lsp"
 
 [language_servers.deps-lsp]

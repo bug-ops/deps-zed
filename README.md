@@ -1,6 +1,6 @@
 # Deps
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../../LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 Zed extension for [deps-lsp](https://github.com/bug-ops/deps-lsp) — intelligent dependency management in `Cargo.toml`, `package.json`, `Gemfile`, and more.
 
@@ -96,4 +96,4 @@ zed --foreground
 
 ## License
 
-[MIT](../../LICENSE)
+[MIT](LICENSE)
