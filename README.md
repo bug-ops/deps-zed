@@ -2,14 +2,14 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Zed extension for [deps-lsp](https://github.com/bug-ops/deps-lsp) — intelligent dependency management in `Cargo.toml`, `package.json`, and more.
+Zed extension for [deps-lsp](https://github.com/bug-ops/deps-lsp) — intelligent dependency management in `Cargo.toml`, `package.json`, `Gemfile`, and more.
 
 ![Deps extension in action](assets/img.png)
 
 ## Features
 
 - **Version Hints** — Inline status indicators (✅ up-to-date, ❌ outdated)
-- **Lock File Support** — Resolved versions from Cargo.lock, package-lock.json, poetry.lock, uv.lock
+- **Lock File Support** — Resolved versions from Cargo.lock, package-lock.json, Gemfile.lock, etc.
 - **Hover Information** — Version list with resolved version from lock file
 - **Diagnostics** — Warnings for outdated, yanked, or unknown packages
 - **Code Actions** — Quick version updates via `Cmd+.`
@@ -56,16 +56,43 @@ Configure in Zed settings (`Cmd+,`):
 | npm | `package.json` | `package-lock.json` |
 | Python | `pyproject.toml` | `poetry.lock`, `uv.lock` |
 | Go | `go.mod` | `go.sum` |
+| Ruby | `Gemfile` | `Gemfile.lock` |
 
 ## Development
 
-> [!NOTE]
-> This crate compiles to WASM and is distributed via Zed Extensions marketplace.
+### Prerequisites
+
+Install Rust via [rustup](https://rustup.rs/) and add the WASM target:
 
 ```bash
-# Build WASM extension
-cargo build -p deps-zed --target wasm32-wasip1
+rustup target add wasm32-wasip1
 ```
+
+### Build WASM Extension
+
+```bash
+cd crates/deps-zed
+cargo build --release --target wasm32-wasip1
+```
+
+### Install as Dev Extension
+
+1. Build the extension (see above)
+2. Open Zed
+3. Run command: `zed: install dev extension`
+4. Select the `crates/deps-zed` directory
+
+The extension will load from your local build. To see logs, run Zed from terminal:
+
+```bash
+zed --foreground
+```
+
+### Testing with Gemfile
+
+1. Install the [Ruby extension](https://zed.dev/extensions/ruby) in Zed
+2. Open a project with `Gemfile` and `Gemfile.lock`
+3. Verify inlay hints and hover information appear
 
 ## License
 

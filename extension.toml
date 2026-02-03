@@ -8,4 +8,10 @@ repository = "https://github.com/bug-ops/deps-lsp"
 
 [language_servers.deps-lsp]
 name = "Deps LSP"
-languages = ["TOML", "JSON", "Go Mod"]
+languages = ["TOML", "JSON", "Go Mod", "Ruby"]
+
+[language_servers.deps-lsp.language_ids]
+"TOML" = "toml"
+"JSON" = "json"
+"Go Mod" = "gomod"
+"Ruby" = "ruby"
