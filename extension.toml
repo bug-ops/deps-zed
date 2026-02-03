@@ -1,11 +1,17 @@
 id = "deps"
 name = "Deps"
-description = "Dependency management LSP with lock file support for Cargo.toml, package.json, pyproject.toml"
-version = "0.1.0"
+description = "Intelligent dependency insights across package ecosystems"
+version = "0.1.1"
 schema_version = 1
 authors = ["Andrei G"]
 repository = "https://github.com/bug-ops/deps-lsp"
 
 [language_servers.deps-lsp]
 name = "Deps LSP"
-languages = ["TOML", "JSON"]
+languages = ["TOML", "JSON", "Go Mod", "Ruby"]
+
+[language_servers.deps-lsp.language_ids]
+"TOML" = "toml"
+"JSON" = "json"
+"Go Mod" = "gomod"
+"Ruby" = "ruby"
