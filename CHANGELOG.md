@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.4] - 2026-02-23
+
+### Added
+
+- XML language support (Maven pom.xml)
+- Java language support
+- Groovy language support (Gradle build files)
+- Kotlin language support (Gradle Kotlin DSL)
+
 ## [0.1.3] - 2026-02-16
 
 ### Added
