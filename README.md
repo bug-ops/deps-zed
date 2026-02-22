@@ -1,28 +1,51 @@
 # Deps
 
+[![Zed Extensions](https://img.shields.io/badge/Zed-Extensions-blue?logo=zedindustries)](https://zed.dev/extensions/deps-language-server)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Zed extension for [deps-lsp](https://github.com/bug-ops/deps-lsp) — intelligent dependency management in `Cargo.toml`, `package.json`, `Gemfile`, and more.
+Zed editor extension for [deps-lsp](https://github.com/bug-ops/deps-lsp) — intelligent dependency insights across package ecosystems.
 
 ![Deps extension in action](assets/img.png)
 
 ## Features
 
-- **Version Hints** — Inline status indicators (✅ up-to-date, ❌ outdated)
-- **Lock File Support** — Resolved versions from Cargo.lock, package-lock.json, Gemfile.lock, etc.
+- **Version Hints** — Inline status indicators (up-to-date / outdated)
 - **Hover Information** — Version list with resolved version from lock file
 - **Diagnostics** — Warnings for outdated, yanked, or unknown packages
 - **Code Actions** — Quick version updates via `Cmd+.`
 - **Autocomplete** — Package names, versions, and feature flags
 
-## Installation
+## Supported Ecosystems
 
-Install **Deps** from Zed Extensions:
+| Ecosystem | Manifest |
+|-----------|----------|
+| Rust | `Cargo.toml` |
+| Node.js | `package.json` |
+| Go | `go.mod` |
+| Ruby | `Gemfile` |
+| Dart / Flutter | `pubspec.yaml` |
+| GitHub Actions / Docker Compose | YAML files |
+| Maven | `pom.xml` |
+| Java | build configs |
+| Gradle | `build.gradle` |
+| Gradle Kotlin DSL | `build.gradle.kts` |
+
+## Installation
 
 1. Open Zed
 2. Press `Cmd+Shift+X` to open Extensions
-3. Search for "Deps"
+3. Search for **Deps**
 4. Click Install
+
+## How It Works
+
+The extension launches `deps-lsp` as a language server. On first use, it resolves the binary in this order:
+
+1. Cached path from a previous run
+2. System PATH (`deps-lsp` executable)
+3. Auto-download from [GitHub releases](https://github.com/bug-ops/deps-lsp/releases) (platform-specific archive)
+
+Old downloaded versions are cleaned up automatically after each update.
 
 ## Configuration
 
@@ -47,52 +70,6 @@ Configure in Zed settings (`Cmd+,`):
   }
 }
 ```
-
-## Supported Files
-
-| Ecosystem | Manifest | Lock File |
-|-----------|----------|-----------|
-| Rust | `Cargo.toml` | `Cargo.lock` |
-| npm | `package.json` | `package-lock.json` |
-| Python | `pyproject.toml` | `poetry.lock`, `uv.lock` |
-| Go | `go.mod` | `go.sum` |
-| Ruby | `Gemfile` | `Gemfile.lock` |
-
-## Development
-
-### Prerequisites
-
-Install Rust via [rustup](https://rustup.rs/) and add the WASM target:
-
-```bash
-rustup target add wasm32-wasip1
-```
-
-### Build WASM Extension
-
-```bash
-cd crates/deps-zed
-cargo build --release --target wasm32-wasip1
-```
-
-### Install as Dev Extension
-
-1. Build the extension (see above)
-2. Open Zed
-3. Run command: `zed: install dev extension`
-4. Select the `crates/deps-zed` directory
-
-The extension will load from your local build. To see logs, run Zed from terminal:
-
-```bash
-zed --foreground
-```
-
-### Testing with Gemfile
-
-1. Install the [Ruby extension](https://zed.dev/extensions/ruby) in Zed
-2. Open a project with `Gemfile` and `Gemfile.lock`
-3. Verify inlay hints and hover information appear
 
 ## License
 
