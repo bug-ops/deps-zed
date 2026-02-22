@@ -8,7 +8,7 @@ repository = "https://github.com/bug-ops/deps-lsp"
 
 [language_servers.deps-lsp]
 name = "Deps LSP"
-languages = ["TOML", "JSON", "Go Mod", "Ruby", "Dart", "YAML", "XML", "Groovy", "Kotlin"]
+languages = ["TOML", "JSON", "Go Mod", "Ruby", "Dart", "YAML", "XML", "Java", "Groovy", "Kotlin"]
 
 [language_servers.deps-lsp.language_ids]
 "TOML" = "toml"
@@ -18,5 +18,6 @@ languages = ["TOML", "JSON", "Go Mod", "Ruby", "Dart", "YAML", "XML", "Groovy", 
 "Dart" = "dart"
 "YAML" = "yaml"
 "XML" = "xml"
+"Java" = "java"
 "Groovy" = "groovy"
 "Kotlin" = "kotlin"

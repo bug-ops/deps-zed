@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - XML language support (Maven pom.xml)
+- Java language support
 - Groovy language support (Gradle build files)
 - Kotlin language support (Gradle Kotlin DSL)
 
