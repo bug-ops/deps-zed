@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.6] - 2026-08-13
+
+### Added
+
+- Linux musl binary support (`deps-lsp` is now resolved as a statically-linked
+  `unknown-linux-musl` target, which runs on both glibc and musl distros)
+- SHA-256 checksum verification of the downloaded `deps-lsp` archive against
+  the `.sha256` sidecar published on each GitHub release
+
+### Changed
+
+- Linux downloads now request the `unknown-linux-musl` asset instead of
+  `unknown-linux-gnu`
+
 ## [0.1.5] - 2026-02-23
 
 ### Added
