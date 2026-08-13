@@ -1,10 +1,35 @@
 #![warn(clippy::all, clippy::pedantic)]
 
+use sha2::{Digest, Sha256};
+use std::fmt::Write as _;
 use std::fs;
 use zed_extension_api::{self as zed, LanguageServerId, Result};
 
 const BINARY_NAME: &str = "deps-lsp";
 const GITHUB_REPO: &str = "bug-ops/deps-lsp";
+
+/// Computes the lowercase hex-encoded SHA-256 digest of a file's contents.
+fn sha256_hex(path: &str) -> Result<String> {
+    let bytes = fs::read(path).map_err(|err| format!("failed to read '{path}': {err}"))?;
+    let digest = Sha256::digest(&bytes);
+    Ok(digest.iter().fold(String::new(), |mut hex, byte| {
+        let _ = write!(hex, "{byte:02x}");
+        hex
+    }))
+}
+
+/// Extracts a 64-character hex SHA-256 digest from a checksum sidecar file's contents.
+///
+/// Linux/macOS sidecars use plain `sha256sum` format (`<hex>  <filename>`), but Windows
+/// sidecars are `CertUtil -hashfile` output, which wraps the digest in extra lines of
+/// prose. Scanning for the hex token handles both without assuming it's the first word.
+fn parse_sha256_sidecar(content: &str) -> Result<String> {
+    content
+        .split_whitespace()
+        .find(|token| token.len() == 64 && token.chars().all(|c| c.is_ascii_hexdigit()))
+        .map(str::to_string)
+        .ok_or_else(|| "malformed checksum file: no 64-character hex digest found".to_string())
+}
 
 struct DepsExtension {
     cached_binary_path: Option<String>,
@@ -54,19 +79,35 @@ impl DepsExtension {
 
         let (platform, arch) = zed::current_platform();
 
-        let asset_name = format!(
-            "{BINARY_NAME}-{arch}-{os}",
-            arch = match arch {
-                zed::Architecture::Aarch64 => "aarch64",
-                zed::Architecture::X86 => "x86",
-                zed::Architecture::X8664 => "x86_64",
-            },
-            os = match platform {
-                zed::Os::Mac => "apple-darwin.tar.gz",
-                zed::Os::Linux => "unknown-linux-gnu.tar.gz",
-                zed::Os::Windows => "pc-windows-msvc.zip",
-            },
-        );
+        let arch_str = match arch {
+            zed::Architecture::Aarch64 => "aarch64",
+            zed::Architecture::X86 => "x86",
+            zed::Architecture::X8664 => "x86_64",
+        };
+        let (os_suffix, os_short, bin_name, file_type) = match platform {
+            zed::Os::Mac => (
+                "apple-darwin.tar.gz",
+                "macos",
+                BINARY_NAME.to_string(),
+                zed::DownloadedFileType::GzipTar,
+            ),
+            // musl binaries are statically linked and run on both glibc
+            // and musl distros; zed_extension_api has no way to detect
+            // the host libc, so musl covers both cases unconditionally.
+            zed::Os::Linux => (
+                "unknown-linux-musl.tar.gz",
+                "linux",
+                BINARY_NAME.to_string(),
+                zed::DownloadedFileType::GzipTar,
+            ),
+            zed::Os::Windows => (
+                "pc-windows-msvc.zip",
+                "windows",
+                format!("{BINARY_NAME}.exe"),
+                zed::DownloadedFileType::Zip,
+            ),
+        };
+        let asset_name = format!("{BINARY_NAME}-{arch_str}-{os_suffix}");
 
         let asset = release
             .assets
@@ -74,23 +115,19 @@ impl DepsExtension {
             .find(|asset| asset.name == asset_name)
             .ok_or_else(|| format!("no asset found matching {asset_name:?}"))?;
 
-        let version_dir = format!("{BINARY_NAME}-{}", release.version);
+        let checksum_name = format!("{asset_name}.sha256");
+        let checksum_asset = release
+            .assets
+            .iter()
+            .find(|asset| asset.name == checksum_name)
+            .ok_or_else(|| format!("no checksum asset found matching {checksum_name:?}"))?;
+
+        let version_dir = format!("{BINARY_NAME}-{}-{arch_str}-{os_short}", release.version);
 
         fs::create_dir_all(&version_dir)
             .map_err(|err| format!("failed to create directory '{version_dir}': {err}"))?;
 
-        let binary_path = format!(
-            "{version_dir}/{bin_name}",
-            bin_name = match platform {
-                zed::Os::Windows => format!("{BINARY_NAME}.exe"),
-                zed::Os::Mac | zed::Os::Linux => BINARY_NAME.to_string(),
-            }
-        );
-
-        let file_type = match platform {
-            zed::Os::Windows => zed::DownloadedFileType::Zip,
-            zed::Os::Mac | zed::Os::Linux => zed::DownloadedFileType::GzipTar,
-        };
+        let binary_path = format!("{version_dir}/{bin_name}");
 
         // Download if binary doesn't exist
         if !fs::metadata(&binary_path).is_ok_and(|stat| stat.is_file()) {
@@ -99,10 +136,50 @@ impl DepsExtension {
                 &zed::LanguageServerInstallationStatus::Downloading,
             );
 
-            zed::download_file(&asset.download_url, &version_dir, file_type)
-                .map_err(|err| format!("failed to download file: {err}"))?;
+            let archive_path = format!("{version_dir}/{asset_name}");
+            let checksum_path = format!("{archive_path}.sha256");
 
-            zed::make_file_executable(&binary_path)?;
+            zed::download_file(
+                &checksum_asset.download_url,
+                &checksum_path,
+                zed::DownloadedFileType::Uncompressed,
+            )
+            .map_err(|err| format!("failed to download checksum: {err}"))?;
+
+            let checksum_content = fs::read_to_string(&checksum_path)
+                .map_err(|err| format!("failed to read checksum file: {err}"))?;
+            fs::remove_file(&checksum_path).ok();
+
+            let expected_checksum = parse_sha256_sidecar(&checksum_content)?;
+
+            // Downloaded uncompressed first so the raw archive bytes can be
+            // hashed; download_file extracts in place and doesn't expose
+            // the archive contents otherwise.
+            zed::download_file(
+                &asset.download_url,
+                &archive_path,
+                zed::DownloadedFileType::Uncompressed,
+            )
+            .map_err(|err| format!("failed to download file: {err}"))?;
+
+            let actual_checksum = sha256_hex(&archive_path)?;
+            if !actual_checksum.eq_ignore_ascii_case(&expected_checksum) {
+                fs::remove_file(&archive_path).ok();
+                return Err(format!(
+                    "checksum mismatch for {asset_name}: expected {expected_checksum}, got {actual_checksum}"
+                ));
+            }
+
+            if let Err(err) = zed::download_file(&asset.download_url, &version_dir, file_type) {
+                fs::remove_dir_all(&version_dir).ok();
+                return Err(format!("failed to extract file: {err}"));
+            }
+            fs::remove_file(&archive_path).ok();
+
+            if let Err(err) = zed::make_file_executable(&binary_path) {
+                fs::remove_dir_all(&version_dir).ok();
+                return Err(err);
+            }
 
             // Clean up old versions
             Self::cleanup_old_versions(&version_dir);
