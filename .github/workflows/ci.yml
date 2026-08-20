@@ -19,18 +19,18 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: wasm32-wasip1
+          targets: wasm32-wasip2
 
       - name: Cache Cargo
         uses: Swatinem/rust-cache@v2
 
       - name: Build
-        run: cargo build --target wasm32-wasip1 --release
+        run: cargo build --target wasm32-wasip2 --release
 
       - name: Check WASM size
         run: |
-          ls -lh target/wasm32-wasip1/release/*.wasm
-          du -sh target/wasm32-wasip1/release/*.wasm
+          ls -lh target/wasm32-wasip2/release/*.wasm
+          du -sh target/wasm32-wasip2/release/*.wasm
 
   clippy:
     name: Clippy
@@ -42,13 +42,13 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy
-          targets: wasm32-wasip1
+          targets: wasm32-wasip2
 
       - name: Cache Cargo
         uses: Swatinem/rust-cache@v2
 
       - name: Clippy
-        run: cargo clippy --target wasm32-wasip1 -- -D warnings
+        run: cargo clippy --target wasm32-wasip2 -- -D warnings
 
   fmt:
     name: Format
