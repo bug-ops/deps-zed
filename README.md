@@ -31,6 +31,7 @@ Zed editor extension for [deps-lsp](https://github.com/bug-ops/deps-lsp) — int
 | Gradle Kotlin DSL | `build.gradle.kts` |
 | Swift (SPM) | `Package.swift` |
 | PHP (Composer) | `composer.json` |
+| C# (NuGet) | `.csproj`, `.fsproj`, `.vbproj`, `Directory.Packages.props` |
 
 ## Installation
 

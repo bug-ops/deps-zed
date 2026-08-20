@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.7] - 2026-08-20
+
+### Added
+
+- C# / NuGet language support, matching `deps-lsp` 0.10.0's new NuGet
+  ecosystem: `.csproj` files via the `C# Project File` language, and
+  `.fsproj` / `.vbproj` / `Directory.Packages.props` via the `MSBuild File`
+  language (both provided by the community C# extension)
+
 ## [0.1.6] - 2026-08-13
 
 ### Added
