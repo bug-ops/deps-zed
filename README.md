@@ -11,8 +11,10 @@ Zed editor extension for [deps-lsp](https://github.com/bug-ops/deps-lsp) — int
 
 - **Version Hints** — Inline status indicators (up-to-date / outdated)
 - **Hover Information** — Version list with resolved version from lock file
-- **Diagnostics** — Warnings for outdated, yanked, or unknown packages
-- **Code Actions** — Quick version updates via `Cmd+.`
+- **Diagnostics** — Warnings for outdated, unknown, yanked, or unsatisfiable-requirement dependencies, plus OSV.dev-backed vulnerability advisories
+- **Release-Freshness Signal** — Flags a "latest" version still inside its cooldown window, mirroring GitHub Dependabot's default 3-day package cooldown
+- **Code Actions** — Quick fixes via `Cmd+.` to update dependencies, resolve unsatisfiable version requirements, and upgrade to a patched version for known vulnerabilities
+- **Code Lens** — "Update N outdated dependencies" batch update on every open manifest
 - **Autocomplete** — Package names, versions, and feature flags
 
 ## Supported Ecosystems
@@ -21,6 +23,8 @@ Zed editor extension for [deps-lsp](https://github.com/bug-ops/deps-lsp) — int
 |-----------|----------|
 | Rust | `Cargo.toml` |
 | Node.js | `package.json` |
+| JavaScript / TypeScript (Deno, JSR/npm) | `deno.json`, `deno.jsonc` |
+| Python | `pyproject.toml` |
 | Go | `go.mod` |
 | Ruby | `Gemfile` |
 | Dart / Flutter | `pubspec.yaml` |
@@ -32,6 +36,9 @@ Zed editor extension for [deps-lsp](https://github.com/bug-ops/deps-lsp) — int
 | Swift (SPM) | `Package.swift` |
 | PHP (Composer) | `composer.json` |
 | C# (NuGet) | `.csproj`, `.fsproj`, `.vbproj`, `Directory.Packages.props` |
+
+> [!NOTE]
+> `deps-lsp` also supports Python's `requirements.txt`/`constraints.txt` and NuGet's `packages.config`, but Zed has no built-in language for either file type, so this extension cannot route them to the language server.
 
 ## Installation
 
@@ -56,6 +63,15 @@ Configure in Zed settings (`Cmd+,`):
 
 ```json
 {
+  "inlay_hints": {
+    "enabled": true
+  },
+  "code_lens": "on",
+  "diagnostics": {
+    "inline": {
+      "enabled": true
+    }
+  },
   "lsp": {
     "deps-lsp": {
       "initialization_options": {
@@ -66,13 +82,25 @@ Configure in Zed settings (`Cmd+,`):
         },
         "diagnostics": {
           "outdated_severity": "hint",
-          "unknown_severity": "warning"
+          "unknown_severity": "warning",
+          "yanked_severity": "warning",
+          "unsatisfiable_severity": "warning",
+          "vulnerabilities_enabled": true
+        },
+        "freshness": {
+          "enabled": true,
+          "cooldown_secs": 259200
+        },
+        "code_lens": {
+          "enabled": true
         }
       }
     }
   }
 }
 ```
+
+The top-level `inlay_hints`, `code_lens`, and `diagnostics.inline` are Zed editor settings — off by default — required to actually display hints, the "Update N outdated dependencies" lens, and inline diagnostic messages. The `lsp.deps-lsp.initialization_options` block configures `deps-lsp` itself; see [deps-lsp's configuration reference](https://github.com/bug-ops/deps-lsp#configuration) for the full option list.
 
 ## License
 
