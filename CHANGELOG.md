@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.8] - 2026-08-24
+
+### Added
+
+- Deno/JSR ecosystem support, matching `deps-lsp` 0.11's Deno ecosystem:
+  `deno.json` via the existing `JSON` language, `deno.jsonc` via the new
+  `JSONC` language
+- Python (PyPI) ecosystem support via `pyproject.toml`, routed through the
+  existing `TOML` language
+
+### Changed
+
+- README rewritten to document `deps-lsp` 0.11's richer feature set:
+  OSV.dev-backed vulnerability diagnostics, the release-freshness signal,
+  the "Update N outdated dependencies" code lens, and quick-fix code actions
+  for unsatisfiable requirements and vulnerable versions
+- Updated screenshot in `assets/img.png`
+
 ## [0.1.7] - 2026-08-20
 
 ### Added
