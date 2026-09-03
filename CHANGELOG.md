@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### Changed
+
+- README updated to reflect `deps-lsp` 0.12.0's dedicated GitHub Actions
+  ecosystem (`.github/workflows/*.yml`/`*.yaml`), including its
+  mutable-ref-pin security diagnostic with a SHA-pin quick fix; already
+  routed through the existing `YAML` language mapping, so no extension code
+  changes were needed. Dropped the inaccurate "Docker Compose" pairing from
+  that row — `deps-lsp` has no such ecosystem
+
 ## [0.1.8] - 2026-08-24
 
 ### Added
