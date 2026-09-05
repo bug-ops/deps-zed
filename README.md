@@ -29,6 +29,7 @@ Zed editor extension for [deps-lsp](https://github.com/bug-ops/deps-lsp) — int
 | Ruby | `Gemfile` |
 | Dart / Flutter | `pubspec.yaml` |
 | GitHub Actions | `.github/workflows/*.yml`, `*.yaml` |
+| GitLab CI/CD | `.gitlab-ci.yml`, `.gitlab/ci/*.yml`, `*.yaml` |
 | Maven | `pom.xml` |
 | Java | build configs |
 | Gradle | `build.gradle` |

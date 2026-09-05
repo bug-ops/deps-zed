@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- README updated to document `deps-lsp` 0.13.0's new GitLab CI/CD ecosystem
+  (`.gitlab-ci.yml`, `.gitlab/ci/*.yml`/`*.yaml` `include:` `project:`/
+  `component:` pins), already routed through the existing `YAML` language
+  mapping, so no extension code changes were needed
 - README updated to reflect `deps-lsp` 0.12.0's dedicated GitHub Actions
   ecosystem (`.github/workflows/*.yml`/`*.yaml`), including its
   mutable-ref-pin security diagnostic with a SHA-pin quick fix; already
