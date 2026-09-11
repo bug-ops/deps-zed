@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-09-11
+
 ### Fixed
 
 - Verify the archive that is actually extracted, instead of a second unverified download
@@ -120,3 +122,6 @@ All notable changes to this project will be documented in this file.
 - Auto-download binary from GitHub releases
 - Platform-specific binary resolution (macOS, Linux, Windows)
 - Old version cleanup
+
+[Unreleased]: https://github.com/bug-ops/deps-zed/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/bug-ops/deps-zed/compare/v0.1.8...v1.0.0
