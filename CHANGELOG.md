@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Verify the archive that is actually extracted, instead of a second unverified download
+
 ### Changed
 
 - README updated to document `deps-lsp` 0.14.0's GitHub Actions `action.yml`/
