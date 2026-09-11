@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-09-11
+
 ### Fixed
 
 - Verify the archive that is actually extracted, instead of a second unverified download
@@ -16,6 +18,9 @@ All notable changes to this project will be documented in this file.
   SHA-pin quick fix, and code lens as workflow files (deps-lsp #706/#718);
   already routed through the existing `YAML` language mapping, so no
   extension code changes were needed
+- README updated to document `deps-lsp` 0.14.0's `pnpm-lock.yaml` lock file
+  provider for the Node.js ecosystem (deps-lsp #719); resolved server-side
+  alongside `package-lock.json`, so no extension code changes were needed
 - README updated to document `deps-lsp` 0.14.0's license hover (SPDX license
   for the resolved and latest version, flagging a "License changed") across
   all supported ecosystems, and the new `initializationOptions.license_policy`
@@ -120,3 +125,6 @@ All notable changes to this project will be documented in this file.
 - Auto-download binary from GitHub releases
 - Platform-specific binary resolution (macOS, Linux, Windows)
 - Old version cleanup
+
+[Unreleased]: https://github.com/bug-ops/deps-zed/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/bug-ops/deps-zed/compare/v0.1.8...v1.0.0
