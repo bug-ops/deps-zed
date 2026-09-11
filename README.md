@@ -11,7 +11,8 @@ Zed editor extension for [deps-lsp](https://github.com/bug-ops/deps-lsp) — int
 
 - **Version Hints** — Inline status indicators (up-to-date / outdated)
 - **Hover Information** — Version list with resolved version from lock file
-- **Diagnostics** — Warnings for outdated, unknown, yanked, or unsatisfiable-requirement dependencies, plus OSV.dev-backed vulnerability advisories
+- **Diagnostics** — Warnings for outdated, unknown, yanked, or unsatisfiable-requirement dependencies, plus OSV.dev-backed vulnerability advisories and an optional SPDX license allow/deny-list check
+- **License Hover** — Shows the SPDX license for the resolved and latest version, flagging a "License changed" when they differ
 - **Release-Freshness Signal** — Flags a "latest" version still inside its cooldown window, mirroring GitHub Dependabot's default 3-day package cooldown
 - **Code Actions** — Quick fixes via `Cmd+.` to update dependencies, resolve unsatisfiable version requirements, and upgrade to a patched version for known vulnerabilities
 - **Code Lens** — "Update N outdated dependencies" batch update on every open manifest
@@ -28,7 +29,7 @@ Zed editor extension for [deps-lsp](https://github.com/bug-ops/deps-lsp) — int
 | Go | `go.mod` |
 | Ruby | `Gemfile` |
 | Dart / Flutter | `pubspec.yaml` |
-| GitHub Actions | `.github/workflows/*.yml`, `*.yaml` |
+| GitHub Actions | `.github/workflows/*.yml`/`*.yaml`, `action.yml`/`action.yaml` |
 | GitLab CI/CD | `.gitlab-ci.yml`, `.gitlab/ci/*.yml`, `*.yaml` |
 | Maven | `pom.xml` |
 | Java | build configs |
@@ -94,6 +95,10 @@ Configure in Zed settings (`Cmd+,`):
         },
         "code_lens": {
           "enabled": true
+        },
+        "license_policy": {
+          "allow": ["MIT", "Apache-2.0"],
+          "deny": ["GPL-3.0"]
         }
       }
     }

@@ -6,6 +6,16 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- README updated to document `deps-lsp` 0.14.0's GitHub Actions `action.yml`/
+  `action.yaml` composite/Docker/JS action manifest support (repository root or
+  `.github/actions/<name>/`), which gets the same hover, diagnostics,
+  SHA-pin quick fix, and code lens as workflow files (deps-lsp #706/#718);
+  already routed through the existing `YAML` language mapping, so no
+  extension code changes were needed
+- README updated to document `deps-lsp` 0.14.0's license hover (SPDX license
+  for the resolved and latest version, flagging a "License changed") across
+  all supported ecosystems, and the new `initializationOptions.license_policy`
+  SPDX allow/deny-list diagnostic (deps-lsp #663, #682)
 - README updated to document `deps-lsp` 0.13.0's new GitLab CI/CD ecosystem
   (`.gitlab-ci.yml`, `.gitlab/ci/*.yml`/`*.yaml` `include:` `project:`/
   `component:` pins), already routed through the existing `YAML` language
