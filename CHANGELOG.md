@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Changed
+
+- README updated to document `deps-lsp` 0.14.0's `pnpm-lock.yaml` lock file
+  provider for the Node.js ecosystem (deps-lsp #719); resolved server-side
+  alongside `package-lock.json`, so no extension code changes were needed
+
 ## [1.0.0] - 2026-09-11
 
 ### Fixed

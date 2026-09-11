@@ -42,6 +42,9 @@ Zed editor extension for [deps-lsp](https://github.com/bug-ops/deps-lsp) — int
 > [!NOTE]
 > `deps-lsp` also supports Python's `requirements.txt`/`constraints.txt` and NuGet's `packages.config`, but Zed has no built-in language for either file type, so this extension cannot route them to the language server.
 
+> [!NOTE]
+> Node.js dependency versions resolve from `package-lock.json` or `pnpm-lock.yaml` when present, for instant lock-file-backed hover and diagnostics without a registry round-trip.
+
 ## Installation
 
 1. Open Zed
