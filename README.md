@@ -25,22 +25,23 @@ Zed editor extension for [deps-lsp](https://github.com/bug-ops/deps-lsp) — int
 | Rust | `Cargo.toml` |
 | Node.js | `package.json` |
 | JavaScript / TypeScript (Deno, JSR/npm) | `deno.json`, `deno.jsonc` |
-| Python | `pyproject.toml` |
+| Python | `pyproject.toml`, `Pipfile`, `requirements.txt` |
 | Go | `go.mod` |
 | Ruby | `Gemfile` |
 | Dart / Flutter | `pubspec.yaml` |
 | GitHub Actions | `.github/workflows/*.yml`/`*.yaml`, `action.yml`/`action.yaml` |
 | GitLab CI/CD | `.gitlab-ci.yml`, `.gitlab/ci/*.yml`, `*.yaml` |
+| pre-commit | `.pre-commit-config.yaml`, `.pre-commit-config.yml` |
 | Maven | `pom.xml` |
 | Java | build configs |
 | Gradle | `build.gradle` |
 | Gradle Kotlin DSL | `build.gradle.kts` |
 | Swift (SPM) | `Package.swift` |
 | PHP (Composer) | `composer.json` |
-| C# (NuGet) | `.csproj`, `.fsproj`, `.vbproj`, `Directory.Packages.props` |
+| C# (NuGet) | `.csproj`, `.fsproj`, `.vbproj`, `Directory.Packages.props`, `packages.config` |
 
 > [!NOTE]
-> `deps-lsp` also supports Python's `requirements.txt`/`constraints.txt` and NuGet's `packages.config`, but Zed has no built-in language for either file type, so this extension cannot route them to the language server.
+> `requirements.txt` is routed to `deps-lsp` only when the community `Python requirements` extension is installed (Zed has no built-in language for it); `constraints.txt` is not routable because that extension matches only `requirements.txt`.
 
 > [!NOTE]
 > Node.js dependency versions resolve from `package-lock.json` or `pnpm-lock.yaml` when present, for instant lock-file-backed hover and diagnostics without a registry round-trip.

@@ -4,11 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-11-19
+
+### Changed
+
+- Reverted the custom in-extension archive extraction; installs use Zed's bundled `download_file` again, as requested in zed-industries/extensions review (#18)
+- Added `Python requirements` to the routed languages so `requirements.txt` reaches the language server when that extension is installed (#18)
+
 ## [1.0.0] - 2026-09-11
-
-### Fixed
-
-- Verify the archive that is actually extracted, instead of a second unverified download
 
 ### Changed
 
