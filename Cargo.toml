@@ -1,6 +1,6 @@
 [package]
 name = "deps-zed"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2024"
 rust-version = "1.89"
 authors = ["Andrei G <k05h31@gmail.com>"]
@@ -14,8 +14,3 @@ crate-type = ["cdylib"]
 [dependencies]
 zed_extension_api = "0.7"
 sha2 = "0.11"
-flate2 = { version = "1.1.10", default-features = false, features = ["rust_backend"] }
-tar = "0.4.46"
-# Pinned: 7.2.0+ re-introduces a typed-path dependency whose nightly-only
-# wasip2 cfg_attr breaks the stable wasm32-wasip2 build this extension targets.
-zip = { version = "=7.1.0", default-features = false, features = ["deflate-flate2"] }
